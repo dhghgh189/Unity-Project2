@@ -27,13 +27,13 @@ public class BaseCreature : MonoBehaviour
         _hp = _maxHp;
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage, BaseCreature attacker)
     {
         _hp -= damage;
         if (_hp <= 0)
         {
             _hp = 0;
-            Die();
+            Die(attacker);
         }
         else
         {
@@ -41,7 +41,7 @@ public class BaseCreature : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+    protected virtual void Die(BaseCreature attacker)
     {
         OnDead?.Invoke();
         gameObject.SetActive(false);
