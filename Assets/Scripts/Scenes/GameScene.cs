@@ -7,11 +7,7 @@ public class GameScene : MonoBehaviour
 {
     void Start()
     {
-
-    }
-
-    void Update()
-    {
-        
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        gm.StartWave();
     }
 }
