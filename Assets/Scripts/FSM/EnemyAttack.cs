@@ -16,7 +16,7 @@ public class EnemyAttack : BaseState<Enemy>
 
     public override void OnUpdate()
     {
-        _owner.transform.LookAt(_owner.TargetPivot);
+        _owner.transform.LookAt(_owner.Target.CenterPivot);
 
         Vector3 toTarget = _owner.GetToTarget();
         float sqrMagnitude = toTarget.sqrMagnitude;
@@ -31,8 +31,8 @@ public class EnemyAttack : BaseState<Enemy>
             _owner.SetAnimation(Define.HASH_ATTACK, 0.25f);
 
             // 풀링 필요
-            Projectile projectile = GameObject.Instantiate(_owner.ProjectilePrefab, _owner.ShotPivot.position, Quaternion.identity);
-            projectile.transform.LookAt(_owner.TargetPivot);
+            Projectile projectile = Object.Instantiate(_owner.ProjectilePrefab, _owner.ShotPivot.position, Quaternion.identity);
+            projectile.transform.LookAt(_owner.Target.CenterPivot);
             projectile.SetOwner(_owner);
             projectile.SetDamage(_owner.ShotDamage);
             projectile.Fire(projectile.transform.forward, _owner.ShotSpeed);

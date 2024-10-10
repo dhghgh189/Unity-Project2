@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : BaseCreature
 {
     [SerializeField] int startCoin;
 
     GunShooter _shooter;
-
     int _coins;
+
+    public Transform CenterPivot { get { return transform.parent.transform; } }
 
     protected override void Init()
     {

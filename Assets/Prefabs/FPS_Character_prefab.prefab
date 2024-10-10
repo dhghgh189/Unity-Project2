@@ -756,7 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08bb2cb775cf02b479f83610242ab22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 100000
   startCoin: 0
 --- !u!114 &1173286060
 MonoBehaviour:
@@ -770,6 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a2e6ba18efd341b3701aab1de0444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 5
   muzzleTransform: {fileID: 1979414045}
   muzzleEffects:
   - {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}
@@ -778,7 +779,7 @@ MonoBehaviour:
   - {fileID: 199458, guid: 29d86feb88bf925428f9d7de6d4b401f, type: 3}
   - {fileID: 199458, guid: 4aa4c63f0f9d6a84dbaeed6b9caeca80, type: 3}
   fireInterval: 0.12
-  fireDistance: 10
+  fireDistance: 20
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 64

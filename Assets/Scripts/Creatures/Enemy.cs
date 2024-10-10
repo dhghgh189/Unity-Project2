@@ -23,8 +23,7 @@ public class Enemy : BaseCreature
     BaseState<Enemy>[] _states = new BaseState<Enemy>[(int)Enums.EnemyState.Max];
 
     public Player Target { get { return _target; } }
-    public Transform TargetPivot { get { return _target.transform.parent.transform; } }
-    public Vector3 ToTarget { get { return TargetPivot.position - transform.position; } }
+    public Vector3 ToTarget { get { return _target.CenterPivot.position - transform.position; } }
     public float AttackRange { get { return attackRange * attackRange; } }
     public Projectile ProjectilePrefab {  get { return projectilePrefab; } }
     public int ShotDamage { get { return shotDamage; } }
@@ -43,13 +42,9 @@ public class Enemy : BaseCreature
         _states[(int)_curState].OnEnter();
     }
 
-    void Start()
+    public void SetTarget(Player target)
     {
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        if (go != null)
-        {
-            _target = go.GetComponent<Player>();
-        }
+        _target = target;
     }
 
     void Update()
@@ -67,7 +62,7 @@ public class Enemy : BaseCreature
 
     public Vector3 GetToTarget()
     {
-        return TargetPivot.position - transform.position;
+        return _target.CenterPivot.position - transform.position;
     }
 
     protected override void Die(BaseCreature attacker)

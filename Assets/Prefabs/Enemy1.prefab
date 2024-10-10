@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be248e83844908488ce2d4450134fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 0
+  _maxHp: 30
   coinAmount: 50
   attackRange: 10
   minAttackInterval: 1
