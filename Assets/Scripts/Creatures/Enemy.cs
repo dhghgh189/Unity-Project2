@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class Enemy : BaseCreature
 {
-    [SerializeField] float moveSpeed;
-    [SerializeField] int damage;
     [SerializeField] int coinAmount;
 
-    [SerializeField] float chaseRange;
     [SerializeField] float attackRange;
-    [SerializeField] float attackInterval;
+    [SerializeField] float minAttackInterval;
+    [SerializeField] float maxAttackInterval;
+
+    [Header("Attack")]
+    [SerializeField] Projectile projectilePrefab;
+    [SerializeField] int shotDamage;
+    [SerializeField] float shotSpeed;
+    [SerializeField] Transform shotPivot;
 
     Player _target;
     Vector3 _startPos;
@@ -18,20 +22,25 @@ public class Enemy : BaseCreature
 
     BaseState<Enemy>[] _states = new BaseState<Enemy>[(int)Enums.EnemyState.Max];
 
-    public float ChaseRange { get { return chaseRange * chaseRange; } }
+    public Player Target { get { return _target; } }
+    public Transform TargetPivot { get { return _target.transform.parent.transform; } }
+    public Vector3 ToTarget { get { return TargetPivot.position - transform.position; } }
     public float AttackRange { get { return attackRange * attackRange; } }
+    public Projectile ProjectilePrefab {  get { return projectilePrefab; } }
+    public int ShotDamage { get { return shotDamage; } }
+    public float ShotSpeed { get { return shotSpeed; } }
+    public Transform ShotPivot { get { return shotPivot; } }
 
     protected override void Init()
     {
         base.Init();
 
         _states[(int)Enums.EnemyState.Idle] = new EnemyIdle(this);
-        _states[(int)Enums.EnemyState.Chase] = new EnemyChase(this);
         _states[(int)Enums.EnemyState.Attack] = new EnemyAttack(this);
-        _states[(int)Enums.EnemyState.Return] = new EnemyReturn(this);
 
         _startPos = transform.position;
         _curState = Enums.EnemyState.Idle;
+        _states[(int)_curState].OnEnter();
     }
 
     void Start()
@@ -45,10 +54,20 @@ public class Enemy : BaseCreature
 
     void Update()
     {
-        if (_target == null)
+        if (_target == null || _target.gameObject.activeInHierarchy == false)
+        {
+            if (_curState != Enums.EnemyState.Idle)
+                ChangeState(Enums.EnemyState.Idle);
+
             return;
+        }
 
         _states[(int)_curState].OnUpdate();
+    }
+
+    public Vector3 GetToTarget()
+    {
+        return TargetPivot.position - transform.position;
     }
 
     protected override void Die(BaseCreature attacker)
@@ -70,5 +89,11 @@ public class Enemy : BaseCreature
         _states[(int)_curState].OnExit();
         _curState = state;
         _states[(int)_curState].OnEnter();
+    }
+
+    public float GetRandomInterval()
+    {
+        float interval = Random.Range(minAttackInterval, maxAttackInterval);
+        return interval;
     }
 }

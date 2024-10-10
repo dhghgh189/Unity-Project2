@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GunShooter : MonoBehaviour
 {
+    [SerializeField] int damage;
     [SerializeField] Transform muzzleTransform;
     [SerializeField] GameObject[] muzzleEffects;
     [SerializeField] float fireInterval;
@@ -60,8 +61,11 @@ public class GunShooter : MonoBehaviour
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
             if (Physics.Raycast(ray, out RaycastHit hit, fireDistance, whatIsTarget))
             {
-                // temp : target의 TakeDamage를 호출 하여 피격 시켜야 함
-                Destroy(hit.collider.gameObject);
+                BaseCreature creature = hit.collider.GetComponent<BaseCreature>();
+                if (creature != null)
+                {
+                    creature.TakeDamage(damage, GetComponent<BaseCreature>());
+                }
             }
 
             _nextFireTime = Time.time + fireInterval;

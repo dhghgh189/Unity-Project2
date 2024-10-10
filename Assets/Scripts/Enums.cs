@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class Enums
 {
-    public enum EnemyState { Idle, Chase, Attack, Return, Max }
+    public enum EnemyState { Idle, Attack, Max }
 }

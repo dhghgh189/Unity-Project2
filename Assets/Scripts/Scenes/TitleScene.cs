@@ -7,9 +7,19 @@ using UnityEngine.XR.ARFoundation;
 
 public class TitleScene : MonoBehaviour
 {
-    void Start()
-    {
+    [SerializeField] ARSession arSession;
+    [SerializeField] ARSessionOrigin arSessionOrigin;
 
+    void Awake()
+    {
+        if (arSession == null || arSessionOrigin == null)
+        {
+            Debug.Log("Init Failed... Please Check Field!");
+            Application.Quit();
+        }
+
+        DontDestroyOnLoad(arSession);
+        DontDestroyOnLoad(arSessionOrigin);
     }
 
     void Update()

@@ -6,8 +6,20 @@ public class EnemyIdle : BaseState<Enemy>
 {
     public EnemyIdle(Enemy owner) : base(owner) { }
 
+    public override void OnEnter()
+    {
+        Debug.Log("OnEnter EnemyIdle");
+        _owner.SetAnimation(Define.HASH_IDLE, 0.25f);
+    }
+
     public override void OnUpdate()
     {
-        
+        Vector3 toTarget = _owner.GetToTarget();
+        float sqrMagnitude = toTarget.sqrMagnitude;
+
+        if (sqrMagnitude <= _owner.AttackRange)
+        {
+            _owner.ChangeState(Enums.EnemyState.Attack);
+        }
     }
 }

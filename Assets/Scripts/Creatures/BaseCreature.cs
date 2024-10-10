@@ -22,6 +22,7 @@ public class BaseCreature : MonoBehaviour
 
     protected virtual void Init()
     {
+        _anim = GetComponent<Animator>();
         _collider = GetComponent<CapsuleCollider>();
 
         _hp = _maxHp;
@@ -44,6 +45,13 @@ public class BaseCreature : MonoBehaviour
     protected virtual void Die(BaseCreature attacker)
     {
         OnDead?.Invoke();
+
+        // 풀링 필요?
         gameObject.SetActive(false);
+    }
+
+    public void SetAnimation(int animHash, float transitionDuration)
+    {
+        _anim.CrossFade(animHash, transitionDuration);
     }
 }
