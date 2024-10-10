@@ -9,11 +9,7 @@ public class UI_Game : MonoBehaviour
 
     void OnEnable()
     {
-        SpawnManager spawnManager = FindAnyObjectByType<SpawnManager>();
-        if (spawnManager == null)
-            return;
-
-        spawnManager.OnChangedRemainCount += UpdateRemainEnemies;
+        GameManager.Instance.Wave.OnChangedRemainEnemies += UpdateRemainEnemies;
     }
 
     public void UpdateRemainEnemies(int count)
@@ -23,10 +19,7 @@ public class UI_Game : MonoBehaviour
 
     private void OnDisable()
     {
-        SpawnManager spawnManager = FindAnyObjectByType<SpawnManager>();
-        if (spawnManager == null)
-            return;
-
-        spawnManager.OnChangedRemainCount -= UpdateRemainEnemies;
+        if (GameManager.Instance != null)
+            GameManager.Instance.Wave.OnChangedRemainEnemies -= UpdateRemainEnemies;
     }
 }

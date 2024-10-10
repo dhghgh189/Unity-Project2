@@ -7,7 +7,14 @@ public class GameScene : MonoBehaviour
 {
     void Start()
     {
-        GameManager gm = FindAnyObjectByType<GameManager>();
-        gm.StartWave();
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        if (go == null)
+        {
+            Debug.LogError("Can't find player!");
+            return;
+        }
+
+        GameManager.Instance.SetPlayer(go.GetComponent<Player>());
+        GameManager.Instance.StartWave();
     }
 }

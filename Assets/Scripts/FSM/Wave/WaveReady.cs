@@ -12,6 +12,11 @@ public class WaveReady : BaseState<WaveFSM>
     {
         Debug.Log("OnEnter WaveReady");
         _timer = _owner.ReadyTime;
+
+        for (int i = 0; i < _owner.CurrentWaveStartSpawnCount; i++)
+        {
+            _owner.Spawn();
+        }
     }
 
     public override void OnUpdate()

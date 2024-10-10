@@ -2,90 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.GraphicsBuffer;
 
 public class SpawnManager : MonoBehaviour
 {
+    static SpawnManager _instance = null;
+    public static SpawnManager Instance { get { return _instance; } }
+
     [SerializeField] float spawnRadius;
-    [SerializeField] float spawnInterval;
-
-    // 임시 : Wave Data 구현되면 옮겨야 함
-    [SerializeField] int startSpawnCount;
-    [SerializeField] int maxSpawnCount;
-    [SerializeField] Enemy enemyPrefab;
-
-    Player _player;
 
     List<Enemy> _listEnemies;
 
-    public UnityAction<int> OnSpawn;
-    public UnityAction<int> OnDespawn;
-
-    // 임시 : WaveFSM 구현되면 옮겨야 함
-    public UnityAction<int> OnChangedRemainCount;
-
-    int _currentWaveSpawnCount;
-
-    // 임시 : WaveFSM 구현되면 옮겨야 함
-    int _remainEnemyCount;
-
-    float _nextSpawnTime;
+    public UnityAction OnSpawn;
+    public UnityAction OnDespawn;
 
     private void Awake()
     {
-        _listEnemies = new List<Enemy>(maxSpawnCount);
-        _remainEnemyCount = maxSpawnCount;
-        _nextSpawnTime = 0;
-    }
-
-    void Start()
-    {
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        if (go == null)
+        if (_instance == null)
         {
-            Debug.LogError("Can't find Player!");
-            return;
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            _listEnemies = new List<Enemy>();
         }
-
-        _player = go.GetComponent<Player>();
-
-        for (int i = 0; i < startSpawnCount; i++)
+        else
         {
-            Spawn();
-        }
-
-        OnChangedRemainCount?.Invoke(_remainEnemyCount);
-    }
-
-    void Update()
-    {
-        if (_player == null || _player.gameObject.activeInHierarchy == false)
-            return;
-
-        if (_currentWaveSpawnCount < maxSpawnCount && Time.time >= _nextSpawnTime)
-        {
-            Spawn();
-            _nextSpawnTime = Time.time + spawnInterval;
+            Destroy(gameObject);
         }
     }
 
-    void Spawn()
+    public void Spawn(Enemy enemyPrefab, Player player)
     {
-        Vector3 randPos = _player.CenterPivot.position + Random.insideUnitSphere * spawnRadius;
+        Vector3 randPos = player.CenterPivot.position + Random.insideUnitSphere * spawnRadius;
         // 풀링 필요
         Enemy enemy = Instantiate(enemyPrefab, randPos, Quaternion.identity);
-        enemy.SetTarget(_player);
+        enemy.SetTarget(player);
         enemy.OnDead = null;
         enemy.OnDead += () =>
         {
             _listEnemies.Remove(enemy);
-            _remainEnemyCount--;
-            OnDespawn?.Invoke(_listEnemies.Count);
-            OnChangedRemainCount?.Invoke(_remainEnemyCount);
+            OnDespawn?.Invoke();
         };
 
         _listEnemies.Add(enemy);
-        _currentWaveSpawnCount++;
-        OnSpawn?.Invoke(_listEnemies.Count);
+        OnSpawn?.Invoke();
     }
 }
