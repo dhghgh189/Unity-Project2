@@ -9,11 +9,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] float spawnRadius;
     [SerializeField] float spawnInterval;
 
-    // 임시
+    // 임시 : Wave Data 구현되면 옮겨야 함
     [SerializeField] int startSpawnCount;
     [SerializeField] int maxSpawnCount;
-
-    // 임시
     [SerializeField] Enemy enemyPrefab;
 
     Player _player;
@@ -23,11 +21,20 @@ public class SpawnManager : MonoBehaviour
     public UnityAction<int> OnSpawn;
     public UnityAction<int> OnDespawn;
 
+    // 임시 : WaveFSM 구현되면 옮겨야 함
+    public UnityAction<int> OnChangedRemainCount;
+
+    int _currentWaveSpawnCount;
+
+    // 임시 : WaveFSM 구현되면 옮겨야 함
+    int _remainEnemyCount;
+
     float _nextSpawnTime;
 
     private void Awake()
     {
         _listEnemies = new List<Enemy>(maxSpawnCount);
+        _remainEnemyCount = maxSpawnCount;
         _nextSpawnTime = 0;
     }
 
@@ -46,6 +53,8 @@ public class SpawnManager : MonoBehaviour
         {
             Spawn();
         }
+
+        OnChangedRemainCount?.Invoke(_remainEnemyCount);
     }
 
     void Update()
@@ -53,7 +62,7 @@ public class SpawnManager : MonoBehaviour
         if (_player == null || _player.gameObject.activeInHierarchy == false)
             return;
 
-        if (_listEnemies.Count < maxSpawnCount && Time.time >= _nextSpawnTime)
+        if (_currentWaveSpawnCount < maxSpawnCount && Time.time >= _nextSpawnTime)
         {
             Spawn();
             _nextSpawnTime = Time.time + spawnInterval;
@@ -70,10 +79,13 @@ public class SpawnManager : MonoBehaviour
         enemy.OnDead += () =>
         {
             _listEnemies.Remove(enemy);
-            OnDespawn?.Invoke(_listEnemies.Count);          
+            _remainEnemyCount--;
+            OnDespawn?.Invoke(_listEnemies.Count);
+            OnChangedRemainCount?.Invoke(_remainEnemyCount);
         };
 
         _listEnemies.Add(enemy);
+        _currentWaveSpawnCount++;
         OnSpawn?.Invoke(_listEnemies.Count);
     }
 }

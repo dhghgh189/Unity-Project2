@@ -779,7 +779,7 @@ MonoBehaviour:
   - {fileID: 199458, guid: 29d86feb88bf925428f9d7de6d4b401f, type: 3}
   - {fileID: 199458, guid: 4aa4c63f0f9d6a84dbaeed6b9caeca80, type: 3}
   fireInterval: 0.12
-  fireDistance: 20
+  fireDistance: 10
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
