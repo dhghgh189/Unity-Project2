@@ -10,6 +10,17 @@ public class WaveFSM
 
     BaseState<WaveFSM>[] _states = new BaseState<WaveFSM>[(int)Enums.WaveState.Max];
 
+    int _currentWaveIndex;
+    public int CurrentWaveIndex
+    {
+        get { return _currentWaveIndex; }
+        set
+        {
+            _currentWaveIndex = value;
+            OnChangedWaveIndex?.Invoke(_currentWaveIndex);
+        }
+    }
+
     WaveSO _currentWaveData;
     public WaveSO CurrentWaveData { get { return _currentWaveData; } }
 
@@ -29,6 +40,7 @@ public class WaveFSM
         } 
     }
 
+    public UnityAction<int> OnChangedWaveIndex;
     public UnityAction<int> OnChangedRemainEnemies;
     public UnityAction<int> OnTimerChanged;
     public UnityAction OnProgress;
@@ -37,6 +49,8 @@ public class WaveFSM
 
     public WaveFSM(int readyTime)
     {
+        _currentWaveIndex = -1;
+
         _readyTime = readyTime;
 
         _states[(int)Enums.WaveState.Idle] = new WaveIdle(this);
@@ -53,10 +67,12 @@ public class WaveFSM
         SpawnManager.Instance.OnDespawn += DecreaseRemainEnemies;
     }
 
-    public void StartWave(int waveIndex)
+    public void StartWave()
     {
+        CurrentWaveIndex++;
+
         // data init
-        if (DataManager.Instance.WaveDict.TryGetValue(waveIndex, out _currentWaveData) == false)
+        if (DataManager.Instance.WaveDict.TryGetValue(CurrentWaveIndex, out _currentWaveData) == false)
         {
             Debug.LogError("Invalid Wave Index!");
             Debug.LogError("Please check Data!");

@@ -11,6 +11,11 @@ public class EnemyAttack : BaseState<Enemy>
 
     public override void OnEnter()
     {
+        if (_nextAttackTime == 0)
+        {
+            _nextAttackTime = Time.time + 3f;
+        }
+
         Debug.Log("OnEnter EnemyAttack");
     }
 

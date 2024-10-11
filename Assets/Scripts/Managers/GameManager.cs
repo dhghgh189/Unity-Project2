@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class GameManager : MonoBehaviour
 
     WaveFSM _waveFSM;
     public WaveFSM Wave { get { return _waveFSM; } }
-    int _currentWaveIndex;
 
     Enums.GameState _curState;
 
@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             _curState = Enums.GameState.Idle;
-            _currentWaveIndex = 0;
             _waveFSM = new WaveFSM(readyTime);
             _waveFSM.OnWaveEnd += EndWave;
         }
@@ -64,7 +63,7 @@ public class GameManager : MonoBehaviour
     public void StartWave()
     {
         Debug.Log("GameManger StartWave");
-        _waveFSM.StartWave(_currentWaveIndex);
+        _waveFSM.StartWave();
         _curState = Enums.GameState.Progress;
     }
 
@@ -72,6 +71,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager EndWave");
         _curState = Enums.GameState.Idle;
+
+        // Game Clear 조건 체크 필요
     }
 
     void OnDisable()

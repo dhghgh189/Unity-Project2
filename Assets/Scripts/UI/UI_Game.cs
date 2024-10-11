@@ -11,6 +11,8 @@ public class UI_Game : MonoBehaviour
     [SerializeField] Image imgCrossHair;
     [SerializeField] GameObject clearPanel;
     [SerializeField] Image imgHpFill;
+    [SerializeField] TextMeshProUGUI txtWaveIndex;
+    [SerializeField] Button btnShoot;
 
     void OnEnable()
     {
@@ -22,6 +24,7 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.Wave.OnProgress += ShowGameUI;
         GameManager.Instance.Wave.OnWaveClear += WaveClear;
         GameManager.Instance.Wave.OnWaveEnd += WaveEnd;
+        GameManager.Instance.Wave.OnChangedWaveIndex += UpdateWaveIndex;
     }
 
     void Start()
@@ -53,11 +56,13 @@ public class UI_Game : MonoBehaviour
     public void ShowGameUI()
     {
         imgCrossHair.gameObject.SetActive(true);
+        btnShoot.gameObject.SetActive(true);
     }
 
     public void HideGameUI()
     {
         imgCrossHair.gameObject.SetActive(false);
+        btnShoot.gameObject.SetActive(false);
     }
 
     public void WaveClear()
@@ -76,6 +81,11 @@ public class UI_Game : MonoBehaviour
         imgHpFill.fillAmount = (float)hp / maxHp;
     }
 
+    public void UpdateWaveIndex(int waveIndex)
+    {
+        txtWaveIndex.text = $"WAVE {waveIndex + 1}";
+    }
+
     private void OnDisable()
     {
         if (GameManager.Instance != null)
@@ -85,6 +95,7 @@ public class UI_Game : MonoBehaviour
             GameManager.Instance.Wave.OnProgress -= ShowGameUI;
             GameManager.Instance.Wave.OnWaveClear += WaveClear;
             GameManager.Instance.Wave.OnWaveEnd -= WaveEnd;
+            GameManager.Instance.Wave.OnChangedWaveIndex -= UpdateWaveIndex;
 
             if (GameManager.Instance.Player != null)
             {
