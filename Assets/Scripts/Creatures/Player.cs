@@ -35,21 +35,6 @@ public class Player : BaseCreature
             }           
             return;
         }
-
-        //if (Input.touchCount > 0)
-        //{
-        //    Touch touch = Input.GetTouch(0);
-
-        //    if (touch.phase == TouchPhase.Began)
-        //    {
-        //        _shooter.StartFire();
-        //    }
-
-        //    if (touch.phase == TouchPhase.Ended)
-        //    {
-        //        _shooter.StopFire();
-        //    }
-        //}
     }
 
     public void AddCoin(int amount)
@@ -67,6 +52,8 @@ public class Player : BaseCreature
     public void StopShoot()
     {
         _shooter.StopFire();
-        _isShooting = false;
+
+        if (_isShooting)
+            _isShooting = false;
     }
 }

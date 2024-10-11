@@ -7,6 +7,17 @@ public class GameScene : MonoBehaviour
 {
     void OnEnable()
     {
+        GameObject camObject = GameObject.FindGameObjectWithTag("MinimapCamera");
+        if (camObject == null)
+        {
+            Debug.LogWarning("Can't find Minimap Camera!");
+        }
+        else
+        {
+            Camera camera = camObject.GetComponent<Camera>();
+            GameManager.Instance.SetMinimapCamera(camera);
+        }
+
         GameObject go = GameObject.FindGameObjectWithTag("Player");
         if (go == null)
         {

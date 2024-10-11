@@ -14,4 +14,9 @@ public class UI_BtnShoot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         GameManager.Instance?.Player?.StopShoot();
     }
+
+    private void OnDisable()
+    {
+        GameManager.Instance?.Player?.StopShoot();
+    }
 }

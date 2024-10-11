@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] int readyTime;
 
+    Camera _minimapCamera;
+    public Camera MinimapCamera { get { return _minimapCamera; } }
+
     void Awake()
     {
         if (_instance == null)
@@ -50,6 +53,11 @@ public class GameManager : MonoBehaviour
     {
         _player = player;
         _waveFSM.Init();
+    }
+
+    public void SetMinimapCamera(Camera camera)
+    {
+        _minimapCamera = camera;
     }
 
     void ChangeState(Enums.GameState state)

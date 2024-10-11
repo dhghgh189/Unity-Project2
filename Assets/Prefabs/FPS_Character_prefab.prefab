@@ -684,6 +684,7 @@ GameObject:
   - component: {fileID: 1173286059}
   - component: {fileID: 1173286061}
   - component: {fileID: 1173286060}
+  - component: {fileID: 8202881412514164036}
   m_Layer: 0
   m_Name: FPS_Character_prefab
   m_TagString: Player
@@ -756,7 +757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08bb2cb775cf02b479f83610242ab22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 10000000
   startCoin: 0
 --- !u!114 &1173286060
 MonoBehaviour:
@@ -770,7 +771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a2e6ba18efd341b3701aab1de0444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 10
   muzzleTransform: {fileID: 1979414045}
   muzzleEffects:
   - {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}
@@ -783,6 +784,22 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &8202881412514164036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010973930614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa404d7261ac374da9f2028b04862c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapObjectPrefab: {fileID: 3664934943190440830, guid: 73305eef11472bb448e242d32bdc688a, type: 3}
+  objectPosition: {x: 0, y: 3, z: 0}
+  objectRotation: {x: 90, y: 0, z: 0}
+  objectColor: {r: 0, g: 1, b: 0.060156345, a: 1}
 --- !u!1 &1000011062073168
 GameObject:
   m_ObjectHideFlags: 0

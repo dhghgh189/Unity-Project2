@@ -37,6 +37,15 @@ public class Projectile : MonoBehaviour
         StartCoroutine(DestroyRoutine());
     }
 
+    void Update()
+    {
+        if (GameManager.Instance.Wave.CurState != Enums.WaveState.Progress)
+        {
+            // 풀링 필요
+            Destroy(gameObject);
+        }
+    }
+
     IEnumerator DestroyRoutine()
     {
         WaitForSeconds _destroyTime = new WaitForSeconds(destroyTime);

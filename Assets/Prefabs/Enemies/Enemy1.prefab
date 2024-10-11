@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3038759672660806258}
   - component: {fileID: 7432161529284213430}
   - component: {fileID: 2246245921224095650}
+  - component: {fileID: 861740742876440928}
   m_Layer: 6
   m_Name: Enemy1
   m_TagString: Untagged
@@ -110,6 +111,22 @@ MonoBehaviour:
   shotDamage: 5
   shotSpeed: 5
   shotPivot: {fileID: 6314442704961408912}
+--- !u!114 &861740742876440928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16829958793894433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa404d7261ac374da9f2028b04862c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapObjectPrefab: {fileID: 3664934943190440830, guid: 73305eef11472bb448e242d32bdc688a, type: 3}
+  objectPosition: {x: 0, y: 3, z: 0}
+  objectRotation: {x: 90, y: 0, z: 0}
+  objectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &366229167135885180
 GameObject:
   m_ObjectHideFlags: 0
