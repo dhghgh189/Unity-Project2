@@ -9,14 +9,18 @@ public class UI_Game : MonoBehaviour
     [SerializeField] TextMeshProUGUI txtRemainEnemies;
     [SerializeField] TextMeshProUGUI txtTimer;
     [SerializeField] Image imgCrossHair;
+    [SerializeField] GameObject clearPanel;
 
     void OnEnable()
     {
-        HideWaveUI();
+        HideGameUI();
+        clearPanel.SetActive(false);
 
         GameManager.Instance.Wave.OnChangedRemainEnemies += UpdateRemainEnemies;
         GameManager.Instance.Wave.OnTimerChanged += UpdateTimer;
         GameManager.Instance.Wave.OnProgress += ShowGameUI;
+        GameManager.Instance.Wave.OnWaveClear += WaveClear;
+        GameManager.Instance.Wave.OnWaveEnd += WaveEnd;
     }
 
     public void UpdateRemainEnemies(int count)
@@ -44,9 +48,20 @@ public class UI_Game : MonoBehaviour
         imgCrossHair.gameObject.SetActive(true);
     }
 
-    public void HideWaveUI()
+    public void HideGameUI()
     {
         imgCrossHair.gameObject.SetActive(false);
+    }
+
+    public void WaveClear()
+    {
+        HideGameUI();
+        clearPanel.SetActive(true);
+    }
+
+    public void WaveEnd()
+    {
+        clearPanel.SetActive(false);
     }
 
     private void OnDisable()
@@ -56,6 +71,8 @@ public class UI_Game : MonoBehaviour
             GameManager.Instance.Wave.OnChangedRemainEnemies -= UpdateRemainEnemies;
             GameManager.Instance.Wave.OnTimerChanged -= UpdateTimer;
             GameManager.Instance.Wave.OnProgress -= ShowGameUI;
+            GameManager.Instance.Wave.OnWaveClear += WaveClear;
+            GameManager.Instance.Wave.OnWaveEnd -= WaveEnd;
         }
     }
 }

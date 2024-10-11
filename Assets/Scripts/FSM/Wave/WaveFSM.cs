@@ -37,6 +37,8 @@ public class WaveFSM
     public UnityAction<int> OnChangedRemainEnemies;
     public UnityAction<int> OnTimerChanged;
     public UnityAction OnProgress;
+    public UnityAction OnWaveClear;
+    public UnityAction OnWaveEnd;
 
     public WaveFSM(int readyTime)
     {
@@ -45,6 +47,7 @@ public class WaveFSM
         _states[(int)Enums.WaveState.Idle] = new WaveIdle(this);
         _states[(int)Enums.WaveState.Ready] = new WaveReady(this);
         _states[(int)Enums.WaveState.Progress] = new WaveProgress(this);
+        _states[(int)Enums.WaveState.Clear] = new WaveClear(this);
 
         _curState = Enums.WaveState.Idle;
         _states[(int)_curState].OnEnter();
@@ -59,8 +62,8 @@ public class WaveFSM
     {
         // data init
         // 값은 테스트를 위해 임시로 설정, data 객체 구현 필요
-        _currentWaveStartSpawnCount = 5;
-        _currentWaveMaxSpawnCount = 10;
+        _currentWaveStartSpawnCount = 1;
+        _currentWaveMaxSpawnCount = 1;
         _currentWaveSpawnInterval = 4f;
         _currentEnemyPrefab = Resources.Load<Enemy>("Enemy1");
 

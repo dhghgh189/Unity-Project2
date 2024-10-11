@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
             _curState = Enums.GameState.Idle;
             _currentWaveIndex = 0;
             _waveFSM = new WaveFSM(readyTime);
+            _waveFSM.OnWaveEnd += EndWave;
         }
         else
         {
@@ -62,17 +63,20 @@ public class GameManager : MonoBehaviour
 
     public void StartWave()
     {
+        Debug.Log("GameManger StartWave");
         _waveFSM.StartWave(_currentWaveIndex);
         _curState = Enums.GameState.Progress;
     }
 
     public void EndWave()
     {
+        Debug.Log("GameManager EndWave");
         _curState = Enums.GameState.Idle;
     }
 
     void OnDisable()
     {
+        _waveFSM.OnWaveEnd -= EndWave;
         _waveFSM.Clear();    
     }
 }

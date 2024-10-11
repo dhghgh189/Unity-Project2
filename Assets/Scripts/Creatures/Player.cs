@@ -24,8 +24,12 @@ public class Player : BaseCreature
 
     void Update()
     {
-        if (GameManager.Instance.Wave.CurState != Enums.WaveState.Progress)
+        if (GameManager.Instance.Wave.CurState != Enums.WaveState.Progress &&
+            GameManager.Instance.Wave.CurState != Enums.WaveState.Clear)
+        {
+            _shooter.StopFire();
             return;
+        }
 
         if (Input.touchCount > 0)
         {

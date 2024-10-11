@@ -19,6 +19,12 @@ public class WaveProgress : BaseState<WaveFSM>
         if (GameManager.Instance.Player == null || GameManager.Instance.Player.gameObject.activeInHierarchy == false)
             return;
 
+        if (_owner.RemainEnemies <= 0)
+        {
+            // wave clear
+            _owner.ChangeState(Enums.WaveState.Clear);
+        }
+
         if (_owner.CurrentWaveSpawnCount < _owner.CurrentWaveMaxSpawnCount && Time.time >= _nextSpawnTime)
         {
             _owner.Spawn();
