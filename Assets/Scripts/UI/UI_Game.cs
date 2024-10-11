@@ -13,6 +13,7 @@ public class UI_Game : MonoBehaviour
     [SerializeField] Image imgHpFill;
     [SerializeField] TextMeshProUGUI txtWaveIndex;
     [SerializeField] Button btnShoot;
+    [SerializeField] TextMeshProUGUI txtCoins;
 
     void OnEnable()
     {
@@ -31,6 +32,11 @@ public class UI_Game : MonoBehaviour
     {
         GameManager.Instance.Player.OnHPChanged += UpdateHP;
         GameManager.Instance.Player.OnDead += HideGameUI;
+        GameManager.Instance.Player.OnChangedCoin += UpdateCoin;
+
+        // Init
+        UpdateHP(GameManager.Instance.Player.HP, GameManager.Instance.Player.MaxHP);
+        UpdateCoin(GameManager.Instance.Player.Coin);
     }
 
     public void UpdateRemainEnemies(int count)
@@ -86,6 +92,11 @@ public class UI_Game : MonoBehaviour
         txtWaveIndex.text = $"WAVE {waveIndex + 1}";
     }
 
+    public void UpdateCoin(int coin)
+    {
+        txtCoins.text = $"{coin}";
+    }
+
     private void OnDisable()
     {
         if (GameManager.Instance != null)
@@ -101,6 +112,7 @@ public class UI_Game : MonoBehaviour
             {
                 GameManager.Instance.Player.OnHPChanged -= UpdateHP;
                 GameManager.Instance.Player.OnDead -= HideGameUI;
+                GameManager.Instance.Player.OnChangedCoin -= UpdateCoin;
             }
         }
     }

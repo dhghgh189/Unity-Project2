@@ -11,15 +11,17 @@ public class BaseCreature : MonoBehaviour
     [SerializeField]
     protected int _maxHp;
     protected int _hp;
-    protected int HP 
+    public int HP 
     { 
         get { return _hp; } 
-        set 
+        protected set 
         {
             _hp = value; 
             OnHPChanged?.Invoke(_hp, _maxHp); 
         } 
     }
+
+    public int MaxHP { get { return _maxHp; } }
 
     public UnityAction OnDamaged;
     public UnityAction OnDead;

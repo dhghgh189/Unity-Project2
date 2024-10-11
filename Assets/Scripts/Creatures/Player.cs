@@ -1,17 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : BaseCreature
 {
     [SerializeField] int startCoin;
 
     GunShooter _shooter;
-    int _coins;
+
+    int _coin;
+    public int Coin 
+    { 
+        get { return _coin; }
+        private set 
+        { 
+            _coin = value; 
+            OnChangedCoin?.Invoke(_coin); 
+        } 
+    }
 
     bool _isShooting;
 
     public Transform CenterPivot { get { return transform.parent.transform; } }
+
+    public UnityAction<int> OnChangedCoin;
 
     protected override void Init()
     {
@@ -21,7 +34,7 @@ public class Player : BaseCreature
         _shooter = GetComponent<GunShooter>();
         _isShooting = false;
 
-        _coins = startCoin;
+        _coin = startCoin;
     }
 
     void Update()
@@ -39,7 +52,7 @@ public class Player : BaseCreature
 
     public void AddCoin(int amount)
     {
-        _coins += amount;
+        Coin += amount;
     }
 
     public void TryShoot()
