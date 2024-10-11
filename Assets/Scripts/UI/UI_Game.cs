@@ -10,6 +10,7 @@ public class UI_Game : MonoBehaviour
     [SerializeField] TextMeshProUGUI txtTimer;
     [SerializeField] Image imgCrossHair;
     [SerializeField] GameObject clearPanel;
+    [SerializeField] Image imgHpFill;
 
     void OnEnable()
     {
@@ -21,6 +22,12 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.Wave.OnProgress += ShowGameUI;
         GameManager.Instance.Wave.OnWaveClear += WaveClear;
         GameManager.Instance.Wave.OnWaveEnd += WaveEnd;
+    }
+
+    void Start()
+    {
+        GameManager.Instance.Player.OnHPChanged += UpdateHP;
+        GameManager.Instance.Player.OnDead += HideGameUI;
     }
 
     public void UpdateRemainEnemies(int count)
@@ -64,6 +71,11 @@ public class UI_Game : MonoBehaviour
         clearPanel.SetActive(false);
     }
 
+    public void UpdateHP(int hp, int maxHp)
+    {
+        imgHpFill.fillAmount = (float)hp / maxHp;
+    }
+
     private void OnDisable()
     {
         if (GameManager.Instance != null)
@@ -73,6 +85,12 @@ public class UI_Game : MonoBehaviour
             GameManager.Instance.Wave.OnProgress -= ShowGameUI;
             GameManager.Instance.Wave.OnWaveClear += WaveClear;
             GameManager.Instance.Wave.OnWaveEnd -= WaveEnd;
+
+            if (GameManager.Instance.Player != null)
+            {
+                GameManager.Instance.Player.OnHPChanged -= UpdateHP;
+                GameManager.Instance.Player.OnDead -= HideGameUI;
+            }
         }
     }
 }

@@ -756,7 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08bb2cb775cf02b479f83610242ab22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100000
+  _maxHp: 100
   startCoin: 0
 --- !u!114 &1173286060
 MonoBehaviour:
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a2e6ba18efd341b3701aab1de0444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 30
   muzzleTransform: {fileID: 1979414045}
   muzzleEffects:
   - {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}

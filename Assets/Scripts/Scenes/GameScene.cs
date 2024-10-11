@@ -5,7 +5,7 @@ using UnityEngine.XR.ARFoundation;
 
 public class GameScene : MonoBehaviour
 {
-    void Start()
+    void OnEnable()
     {
         GameObject go = GameObject.FindGameObjectWithTag("Player");
         if (go == null)
@@ -14,7 +14,8 @@ public class GameScene : MonoBehaviour
             return;
         }
 
-        GameManager.Instance.SetPlayer(go.GetComponent<Player>());
+        Player player = go.GetComponent<Player>();
+        GameManager.Instance.SetPlayer(player);
         GameManager.Instance.StartWave();
     }
 }

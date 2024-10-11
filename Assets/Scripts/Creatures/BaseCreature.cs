@@ -11,9 +11,20 @@ public class BaseCreature : MonoBehaviour
     [SerializeField]
     protected int _maxHp;
     protected int _hp;
+    protected int HP 
+    { 
+        get { return _hp; } 
+        set 
+        {
+            _hp = value; 
+            OnHPChanged?.Invoke(_hp, _maxHp); 
+        } 
+    }
 
     public UnityAction OnDamaged;
     public UnityAction OnDead;
+
+    public UnityAction<int, int> OnHPChanged;
 
     void Awake()
     {
@@ -30,10 +41,10 @@ public class BaseCreature : MonoBehaviour
 
     public virtual void TakeDamage(int damage, BaseCreature attacker)
     {
-        _hp -= damage;
-        if (_hp <= 0)
+        HP -= damage;
+        if (HP <= 0)
         {
-            _hp = 0;
+            HP = 0;
             Die(attacker);
         }
         else
