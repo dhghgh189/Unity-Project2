@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     Player _player;
     public Player Player { get { return _player; } }
 
-    [SerializeField] float readyTime;
+    [SerializeField] int readyTime;
 
     void Awake()
     {

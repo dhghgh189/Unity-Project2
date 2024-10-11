@@ -30,12 +30,11 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void Spawn(Enemy enemyPrefab, Player player)
+    public void Spawn(Enemy enemyPrefab)
     {
-        Vector3 randPos = player.CenterPivot.position + Random.insideUnitSphere * spawnRadius;
+        Vector3 randPos = GameManager.Instance.Player.CenterPivot.position + Random.insideUnitSphere * spawnRadius;
         // 풀링 필요
         Enemy enemy = Instantiate(enemyPrefab, randPos, Quaternion.identity);
-        enemy.SetTarget(player);
         enemy.OnDead = null;
         enemy.OnDead += () =>
         {

@@ -37,18 +37,18 @@ public class Enemy : BaseCreature
         _states[(int)Enums.EnemyState.Idle] = new EnemyIdle(this);
         _states[(int)Enums.EnemyState.Attack] = new EnemyAttack(this);
 
+        _target = GameManager.Instance.Player;
+
         _startPos = transform.position;
         _curState = Enums.EnemyState.Idle;
         _states[(int)_curState].OnEnter();
     }
 
-    public void SetTarget(Player target)
-    {
-        _target = target;
-    }
-
     void Update()
     {
+        if (GameManager.Instance.Wave.CurState != Enums.WaveState.Progress)
+            return;
+
         if (_target == null || _target.gameObject.activeInHierarchy == false)
         {
             if (_curState != Enums.EnemyState.Idle)

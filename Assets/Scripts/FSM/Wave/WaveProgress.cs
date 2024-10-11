@@ -11,6 +11,7 @@ public class WaveProgress : BaseState<WaveFSM>
     public override void OnEnter()
     {
         Debug.Log("OnEnter WaveProgress");
+        _owner.OnProgress?.Invoke();
     }
 
     public override void OnUpdate()

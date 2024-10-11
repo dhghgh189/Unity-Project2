@@ -24,6 +24,9 @@ public class Player : BaseCreature
 
     void Update()
     {
+        if (GameManager.Instance.Wave.CurState != Enums.WaveState.Progress)
+            return;
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);

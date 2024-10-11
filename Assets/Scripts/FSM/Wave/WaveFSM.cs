@@ -6,9 +6,11 @@ using UnityEngine.Events;
 public class WaveFSM
 {
     Enums.WaveState _curState;
+    public Enums.WaveState CurState { get { return _curState; } }
+
     BaseState<WaveFSM>[] _states = new BaseState<WaveFSM>[(int)Enums.WaveState.Max];
 
-    float _readyTime;
+    int _readyTime;
     int _currentWaveStartSpawnCount;
     int _currentWaveMaxSpawnCount;
     float _currentWaveSpawnInterval;
@@ -16,7 +18,7 @@ public class WaveFSM
     int _currentWaveSpawnCount;
     int _remainEnemies;
 
-    public float ReadyTime { get { return _readyTime; } }
+    public int ReadyTime { get { return _readyTime; } }
     public int CurrentWaveStartSpawnCount { get { return _currentWaveStartSpawnCount; } }
     public int CurrentWaveMaxSpawnCount { get { return _currentWaveMaxSpawnCount; } }
     public float CurrentWaveSpawnInterval { get { return _currentWaveSpawnInterval; } }
@@ -33,8 +35,10 @@ public class WaveFSM
     }
 
     public UnityAction<int> OnChangedRemainEnemies;
+    public UnityAction<int> OnTimerChanged;
+    public UnityAction OnProgress;
 
-    public WaveFSM(float readyTime)
+    public WaveFSM(int readyTime)
     {
         _readyTime = readyTime;
 
@@ -90,7 +94,7 @@ public class WaveFSM
 
     public void Spawn()
     {
-        SpawnManager.Instance.Spawn(CurrentEnemyPrefab, GameManager.Instance.Player);
+        SpawnManager.Instance.Spawn(CurrentEnemyPrefab);
         _currentWaveSpawnCount++;
     }
 

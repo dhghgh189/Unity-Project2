@@ -9,6 +9,7 @@ public class EnemyIdle : BaseState<Enemy>
     public override void OnEnter()
     {
         Debug.Log("OnEnter EnemyIdle");
+        _owner.transform.LookAt(_owner.Target.CenterPivot);
         _owner.SetAnimation(Define.HASH_IDLE, 0.25f);
     }
 

@@ -5,25 +5,44 @@ using UnityEngine;
 
 public class WaveReady : BaseState<WaveFSM>
 {
-    float _timer;
+    int _timer;
+    float _elapsedTime;
+
+    int Timer 
+    { 
+        get { return _timer; } 
+        set 
+        { 
+            _timer = value; 
+            _owner.OnTimerChanged?.Invoke(_timer); 
+        } 
+    }
+
     public WaveReady(WaveFSM owner) : base(owner) { }
 
     public override void OnEnter()
     {
         Debug.Log("OnEnter WaveReady");
-        _timer = _owner.ReadyTime;
+        _elapsedTime = 0;
 
         for (int i = 0; i < _owner.CurrentWaveStartSpawnCount; i++)
         {
             _owner.Spawn();
         }
+
+        Timer = _owner.ReadyTime;
     }
 
     public override void OnUpdate()
     {
         if (_timer > 0)
         {
-            _timer -= Time.deltaTime;
+            _elapsedTime += Time.deltaTime;
+            if (_elapsedTime >= 1)
+            {
+                Timer--;
+                _elapsedTime = 0;
+            }          
         }
         else
         {
