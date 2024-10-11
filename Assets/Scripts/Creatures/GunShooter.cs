@@ -25,7 +25,6 @@ public class GunShooter : MonoBehaviour
         if (_fireRoutine != null)
             return;
 
-        Debug.Log("Start Fire");
         _fireRoutine = StartCoroutine(FireRoutine());
     }
 
@@ -34,7 +33,6 @@ public class GunShooter : MonoBehaviour
         if (_fireRoutine == null)
             return;
 
-        Debug.Log("Stop Fire");
         StopCoroutine(_fireRoutine);
         _fireRoutine = null;
     }
@@ -49,8 +47,6 @@ public class GunShooter : MonoBehaviour
                 yield return null;
                 continue;
             }
-
-            Debug.Log("Fire");
 
             iRand = Random.Range(0, muzzleEffects.Length);
 

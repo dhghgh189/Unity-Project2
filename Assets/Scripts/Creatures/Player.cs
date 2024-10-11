@@ -40,7 +40,6 @@ public class Player : BaseCreature
     public void AddCoin(int amount)
     {
         _coins += amount;
-        Debug.Log($"AddCoin : {amount}");
     }
 
     public void TryShoot()

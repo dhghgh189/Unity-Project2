@@ -10,8 +10,9 @@ public class MinimapObjects : MonoBehaviour
 
     GameObject _minimapObject;
 
-    private void Awake()
+    private void Start()
     {
+        // 풀링 필요
         _minimapObject = Instantiate(minimapObjectPrefab, gameObject.transform);
 
         SpriteRenderer sr = _minimapObject.GetComponent<SpriteRenderer>();
@@ -23,7 +24,7 @@ public class MinimapObjects : MonoBehaviour
         if (GameManager.Instance.MinimapCamera == null)
             return;
 
-        _minimapObject.transform.LookAt(GameManager.Instance.MinimapCamera.transform);
+        _minimapObject.transform.rotation = Quaternion.LookRotation(Vector3.up);
         _minimapObject.transform.position = gameObject.transform.position + objectPosition;
     }
 }
