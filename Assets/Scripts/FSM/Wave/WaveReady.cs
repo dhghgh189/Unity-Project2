@@ -25,7 +25,7 @@ public class WaveReady : BaseState<WaveFSM>
         Debug.Log("OnEnter WaveReady");
         _elapsedTime = 0;
 
-        for (int i = 0; i < _owner.CurrentWaveStartSpawnCount; i++)
+        for (int i = 0; i < _owner.CurrentWaveData.StartSpawnCount; i++)
         {
             _owner.Spawn();
         }

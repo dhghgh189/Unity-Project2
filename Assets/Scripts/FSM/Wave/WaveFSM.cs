@@ -10,19 +10,14 @@ public class WaveFSM
 
     BaseState<WaveFSM>[] _states = new BaseState<WaveFSM>[(int)Enums.WaveState.Max];
 
+    WaveSO _currentWaveData;
+    public WaveSO CurrentWaveData { get { return _currentWaveData; } }
+
     int _readyTime;
-    int _currentWaveStartSpawnCount;
-    int _currentWaveMaxSpawnCount;
-    float _currentWaveSpawnInterval;
-    Enemy _currentEnemyPrefab;
     int _currentWaveSpawnCount;
     int _remainEnemies;
 
     public int ReadyTime { get { return _readyTime; } }
-    public int CurrentWaveStartSpawnCount { get { return _currentWaveStartSpawnCount; } }
-    public int CurrentWaveMaxSpawnCount { get { return _currentWaveMaxSpawnCount; } }
-    public float CurrentWaveSpawnInterval { get { return _currentWaveSpawnInterval; } }
-    public Enemy CurrentEnemyPrefab { get { return _currentEnemyPrefab; } }
     public int CurrentWaveSpawnCount { get { return _currentWaveSpawnCount; } }
     public int RemainEnemies 
     { 
@@ -61,15 +56,16 @@ public class WaveFSM
     public void StartWave(int waveIndex)
     {
         // data init
-        // 값은 테스트를 위해 임시로 설정, data 객체 구현 필요
-        _currentWaveStartSpawnCount = 1;
-        _currentWaveMaxSpawnCount = 1;
-        _currentWaveSpawnInterval = 4f;
-        _currentEnemyPrefab = Resources.Load<Enemy>("Enemy1");
+        if (DataManager.Instance.WaveDict.TryGetValue(waveIndex, out _currentWaveData) == false)
+        {
+            Debug.LogError("Invalid Wave Index!");
+            Debug.LogError("Please check Data!");
+            return;
+        }
 
         // field init
         _currentWaveSpawnCount = 0;
-        RemainEnemies = _currentWaveMaxSpawnCount;
+        RemainEnemies = _currentWaveData.MaxSpawnCount;
 
         // change state
         ChangeState(Enums.WaveState.Ready);
@@ -97,7 +93,7 @@ public class WaveFSM
 
     public void Spawn()
     {
-        SpawnManager.Instance.Spawn(CurrentEnemyPrefab);
+        SpawnManager.Instance.Spawn(_currentWaveData.EnemyPrefab);
         _currentWaveSpawnCount++;
     }
 

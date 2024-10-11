@@ -25,10 +25,10 @@ public class WaveProgress : BaseState<WaveFSM>
             _owner.ChangeState(Enums.WaveState.Clear);
         }
 
-        if (_owner.CurrentWaveSpawnCount < _owner.CurrentWaveMaxSpawnCount && Time.time >= _nextSpawnTime)
+        if (_owner.CurrentWaveSpawnCount < _owner.CurrentWaveData.MaxSpawnCount && Time.time >= _nextSpawnTime)
         {
             _owner.Spawn();
-            _nextSpawnTime = Time.time + _owner.CurrentWaveSpawnInterval;
+            _nextSpawnTime = Time.time + _owner.CurrentWaveData.SpawnInterval;
         }
     }
 }
