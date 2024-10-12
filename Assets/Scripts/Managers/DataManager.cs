@@ -12,12 +12,19 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance { get { return _instance; } }
 
     [SerializeField] List<WaveSO> listWaveSO;
+    [SerializeField] List<ItemSO> listItemSO;
 
     Dictionary<int, WaveSO> waveDict = new Dictionary<int, WaveSO>();
+    Dictionary<int, ItemSO> itemDict = new Dictionary<int, ItemSO>();
 
     public Dictionary<int, WaveSO> WaveDict
     {
         get { return waveDict; }
+    }
+
+    public Dictionary<int, ItemSO> ItemDict
+    {
+        get { return itemDict; }
     }
 
     void Awake()
@@ -38,6 +45,7 @@ public class DataManager : MonoBehaviour
     void LoadData()
     {
         LoadWaveData();
+        LoadItemData();
 
         Debug.Log("Data Load Complete");
     }
@@ -55,6 +63,24 @@ public class DataManager : MonoBehaviour
                 return;
             }
             waveDict.Add(waveData.ID, waveData);
+        }
+    }
+
+    void LoadItemData()
+    {
+        ItemSO itemData;
+        for (int i = 0; i < listItemSO.Count; i++)
+        {
+            itemData = listItemSO[i];
+            if (itemDict.ContainsKey(itemData.ID))
+            {
+                Debug.LogError($"Item ID duplicate! / ID : {itemData.ID}");
+                Debug.LogError($"Old Value : {itemDict[itemData.ID].Name}");
+                Debug.LogError($"New Value : {itemData.Name}");
+                Debug.LogError("Please Check Data!");
+                return;
+            }
+            itemDict.Add(itemData.ID, itemData);
         }
     }
 }
