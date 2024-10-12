@@ -9,6 +9,7 @@ public class ItemSO : ScriptableObject
     public string Name;
     public string Description;
     public int Price;
+    public float Value;
     public Sprite Icon;
     public string ClassName;
 }

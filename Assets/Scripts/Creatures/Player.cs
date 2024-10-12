@@ -55,6 +55,18 @@ public class Player : BaseCreature
         Coin += amount;
     }
 
+    public void Heal(int amount)
+    {
+        if ((HP + amount) > MaxHP)
+        {
+            HP = MaxHP;
+        }
+        else
+        {
+            HP += amount;
+        }
+    }
+
     public void TryShoot()
     {
         _isShooting = true;
