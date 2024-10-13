@@ -14,11 +14,18 @@ public class UI_Game : MonoBehaviour
     [SerializeField] TextMeshProUGUI txtWaveIndex;
     [SerializeField] Button btnShoot;
     [SerializeField] TextMeshProUGUI txtCoins;
+    [SerializeField] UI_Item[] uiItems;
 
     void OnEnable()
     {
         HideGameUI();
         clearPanel.SetActive(false);
+
+        for (int i = 0; i < uiItems.Length; i++)
+        {
+            uiItems[i].Init(i);
+            uiItems[i].gameObject.SetActive(false);
+        }
 
         GameManager.Instance.Wave.OnChangedRemainEnemies += UpdateRemainEnemies;
         GameManager.Instance.Wave.OnTimerChanged += UpdateTimer;
@@ -33,6 +40,7 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.Player.OnHPChanged += UpdateHP;
         GameManager.Instance.Player.OnDead += HideGameUI;
         GameManager.Instance.Player.OnChangedCoin += UpdateCoin;
+        GameManager.Instance.Player.OnChangedInventory += UpdateInventory;
 
         // Init
         UpdateHP(GameManager.Instance.Player.HP, GameManager.Instance.Player.MaxHP);
@@ -97,6 +105,22 @@ public class UI_Game : MonoBehaviour
         txtCoins.text = $"{coin}";
     }
 
+    public void UpdateInventory()
+    {
+        for (int i = 0; i < uiItems.Length; i++)
+        {
+            if (i < GameManager.Instance.Player.Inventory.Count)
+            {
+                uiItems[i].SetInfo(GameManager.Instance.Player.Inventory[i].ID);
+                uiItems[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                uiItems[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
     private void OnDisable()
     {
         if (GameManager.Instance != null)
@@ -113,6 +137,7 @@ public class UI_Game : MonoBehaviour
                 GameManager.Instance.Player.OnHPChanged -= UpdateHP;
                 GameManager.Instance.Player.OnDead -= HideGameUI;
                 GameManager.Instance.Player.OnChangedCoin -= UpdateCoin;
+                GameManager.Instance.Player.OnChangedInventory += UpdateInventory;
             }
         }
     }

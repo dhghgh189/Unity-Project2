@@ -27,6 +27,10 @@ public class GameScene : MonoBehaviour
 
         Player player = go.GetComponent<Player>();
         GameManager.Instance.SetPlayer(player);
+    }
+
+    void Start()
+    {
         GameManager.Instance.StartWave();
     }
 }

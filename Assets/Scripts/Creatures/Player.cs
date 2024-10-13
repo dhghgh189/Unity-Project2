@@ -9,6 +9,9 @@ public class Player : BaseCreature
 
     GunShooter _shooter;
 
+    List<BaseItem> _inventory = new List<BaseItem>(Define.INVENTORY_SIZE);
+    public List<BaseItem> Inventory { get { return _inventory; } }
+
     int _coin;
     public int Coin 
     { 
@@ -25,6 +28,7 @@ public class Player : BaseCreature
     public Transform CenterPivot { get { return transform.parent.transform; } }
 
     public UnityAction<int> OnChangedCoin;
+    public UnityAction OnChangedInventory;
 
     protected override void Init()
     {
@@ -47,6 +51,30 @@ public class Player : BaseCreature
                 StopShoot();
             }           
             return;
+        }
+    }
+
+    public bool AddItem(BaseItem item)
+    {
+        if (_inventory.Count >= Define.INVENTORY_SIZE)
+            return false;
+
+        _inventory.Add(item);
+
+        OnChangedInventory?.Invoke();
+
+        return true;
+    }
+
+    public void UseItem(int index)
+    {
+        if (index >= _inventory.Count)
+            return;
+
+        if (_inventory[index].Use())
+        {
+            _inventory.RemoveAt(index);
+            OnChangedInventory?.Invoke();
         }
     }
 

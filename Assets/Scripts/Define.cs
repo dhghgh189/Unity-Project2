@@ -6,4 +6,6 @@ public static class Define
 {
     public static readonly int HASH_IDLE = Animator.StringToHash("Idle");
     public static readonly int HASH_ATTACK = Animator.StringToHash("Attack");
+
+    public const int INVENTORY_SIZE = 3;
 }

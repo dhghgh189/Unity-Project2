@@ -32,5 +32,5 @@ public abstract class BaseItem
         _value = data.Value;
     }
 
-    public abstract void Use();
+    public abstract bool Use();
 }
