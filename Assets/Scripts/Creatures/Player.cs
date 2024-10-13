@@ -16,7 +16,7 @@ public class Player : BaseCreature
     public int Coin 
     { 
         get { return _coin; }
-        private set 
+        set 
         { 
             _coin = value; 
             OnChangedCoin?.Invoke(_coin); 

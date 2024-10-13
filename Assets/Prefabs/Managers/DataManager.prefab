@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listWaveSO:
   - {fileID: 11400000, guid: 905974b1a1b172248a7170bd95f63778, type: 2}
+  - {fileID: 11400000, guid: a8652fe8835db8e4b8678cb2f3978cf5, type: 2}
   listItemSO:
   - {fileID: 11400000, guid: 4e31d269d7092904786d40919389e520, type: 2}

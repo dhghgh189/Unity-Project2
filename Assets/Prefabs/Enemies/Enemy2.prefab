@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1152467718877454222}
   - component: {fileID: 2362766433882272401}
   - component: {fileID: 2554858062192458840}
+  - component: {fileID: 3552749428104486511}
   m_Layer: 6
   m_Name: Enemy2
   m_TagString: Untagged
@@ -102,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHp: 50
-  coinAmount: 50
+  coinAmount: 70
   attackRange: 10
   minAttackInterval: 1
   maxAttackInterval: 2.5
@@ -110,6 +111,21 @@ MonoBehaviour:
   shotDamage: 10
   shotSpeed: 8
   shotPivot: {fileID: 675036736674126231}
+--- !u!114 &3552749428104486511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61258325561811606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa404d7261ac374da9f2028b04862c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapObjectPrefab: {fileID: 3664934943190440830, guid: 73305eef11472bb448e242d32bdc688a, type: 3}
+  objectPosition: {x: 0, y: 3, z: 0}
+  objectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &429939428125753291
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,10 +15,12 @@ public class UI_Game : MonoBehaviour
     [SerializeField] Button btnShoot;
     [SerializeField] TextMeshProUGUI txtCoins;
     [SerializeField] UI_Item[] uiItems;
+    [SerializeField] UI_Shop shopPanel; 
 
     void OnEnable()
     {
         HideGameUI();
+        shopPanel.gameObject.SetActive(false);
         clearPanel.SetActive(false);
 
         for (int i = 0; i < uiItems.Length; i++)
@@ -33,6 +35,7 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.Wave.OnWaveClear += WaveClear;
         GameManager.Instance.Wave.OnWaveEnd += WaveEnd;
         GameManager.Instance.Wave.OnChangedWaveIndex += UpdateWaveIndex;
+        GameManager.Instance.OnRequestOpenShop += ShowShopUI;
     }
 
     void Start()
@@ -77,6 +80,13 @@ public class UI_Game : MonoBehaviour
     {
         imgCrossHair.gameObject.SetActive(false);
         btnShoot.gameObject.SetActive(false);
+    }
+
+    public void ShowShopUI()
+    {
+        shopPanel.gameObject.SetActive(true);
+
+        // hide는 shopPanel에 있는 Close 버튼을 통해 별도로 처리
     }
 
     public void WaveClear()
@@ -131,6 +141,7 @@ public class UI_Game : MonoBehaviour
             GameManager.Instance.Wave.OnWaveClear += WaveClear;
             GameManager.Instance.Wave.OnWaveEnd -= WaveEnd;
             GameManager.Instance.Wave.OnChangedWaveIndex -= UpdateWaveIndex;
+            GameManager.Instance.OnRequestOpenShop += ShowShopUI;
 
             if (GameManager.Instance.Player != null)
             {

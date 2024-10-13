@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     Camera _minimapCamera;
     public Camera MinimapCamera { get { return _minimapCamera; } }
 
+    public UnityAction OnRequestOpenShop;
+
     void Awake()
     {
         if (_instance == null)
@@ -70,6 +72,9 @@ public class GameManager : MonoBehaviour
 
     public void StartWave()
     {
+        if (_curState == Enums.GameState.Progress)
+            return;
+
         Debug.Log("GameManger StartWave");
         _waveFSM.StartWave();
         _curState = Enums.GameState.Progress;
@@ -80,7 +85,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager EndWave");
         _curState = Enums.GameState.Idle;
 
-        // Game Clear 조건 체크 필요
+        // 임시 : 게임 Clear 처리 추가 필요
+        if (_waveFSM.CurrentWaveIndex < DataManager.Instance.WaveDict.Count -1)
+        {
+            OnRequestOpenShop?.Invoke();
+        }
     }
 
     void OnDisable()
