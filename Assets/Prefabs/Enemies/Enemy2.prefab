@@ -109,7 +109,7 @@ MonoBehaviour:
   maxAttackInterval: 2.5
   projectilePrefab: {fileID: 6288611856026977010, guid: feb2c5fd3ff69034bb7918c001a00e71, type: 3}
   shotDamage: 10
-  shotSpeed: 8
+  shotSpeed: 5
   shotPivot: {fileID: 675036736674126231}
 --- !u!114 &3552749428104486511
 MonoBehaviour:

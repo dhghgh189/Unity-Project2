@@ -15,5 +15,5 @@ MonoBehaviour:
   ID: 0
   StartSpawnCount: 1
   MaxSpawnCount: 5
-  SpawnInterval: 1.5
+  SpawnInterval: 3
   EnemyPrefab: {fileID: 2246245921224095650, guid: 9422ca55be4f64a4ea14c90c932d5ae2, type: 3}

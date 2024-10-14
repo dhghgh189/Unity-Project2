@@ -109,7 +109,7 @@ MonoBehaviour:
   maxAttackInterval: 2.5
   projectilePrefab: {fileID: 6288611856026977010, guid: feb2c5fd3ff69034bb7918c001a00e71, type: 3}
   shotDamage: 5
-  shotSpeed: 5
+  shotSpeed: 2.5
   shotPivot: {fileID: 6314442704961408912}
 --- !u!114 &861740742876440928
 MonoBehaviour:
@@ -125,7 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimapObjectPrefab: {fileID: 3664934943190440830, guid: 73305eef11472bb448e242d32bdc688a, type: 3}
   objectPosition: {x: 0, y: 3, z: 0}
-  objectRotation: {x: 90, y: 0, z: 0}
   objectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &366229167135885180
 GameObject:
