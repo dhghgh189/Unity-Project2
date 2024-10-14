@@ -9,6 +9,11 @@ public class TitleScene : MonoBehaviour
 {
     [SerializeField] ARSession arSession;
     [SerializeField] ARSessionOrigin arSessionOrigin;
+    [SerializeField] UI_Title uiTitle;
+    [SerializeField] float loadTime;
+
+    bool _bLoaded = false;
+    float _timer;
 
     void Awake()
     {
@@ -20,13 +25,27 @@ public class TitleScene : MonoBehaviour
 
         DontDestroyOnLoad(arSession);
         DontDestroyOnLoad(arSessionOrigin);
+
+        _timer = loadTime;
     }
 
     void Update()
     {
-        if (Input.touchCount > 0)
+        if (_bLoaded == false)
         {
-            SceneManager.LoadScene("Game");
+            _timer -= Time.deltaTime;
+            if (_timer <= 0)
+            {
+                _bLoaded = true;
+                uiTitle.HideLoading();
+            }
+        }
+        else
+        {
+            if (Input.touchCount > 0)
+            {
+                SceneManager.LoadScene("Game");
+            }
         }
     }
 }
