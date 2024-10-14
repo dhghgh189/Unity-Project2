@@ -784,6 +784,7 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
+  bulletImpactEffect: {fileID: 198720034268917042, guid: ffbf169ab9dcfdc45ae14010bc82a6b2, type: 3}
 --- !u!1 &1000011062073168
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class GunShooter : MonoBehaviour
     [SerializeField] float fireInterval;
     [SerializeField] float fireDistance;
     [SerializeField] LayerMask whatIsTarget;
+    [SerializeField] ParticleSystem bulletImpactEffect;
 
     GameObject[] _cacheEffects;
     Coroutine _fireRoutine;
@@ -26,6 +27,11 @@ public class GunShooter : MonoBehaviour
             _cacheEffects[i] = Instantiate(muzzleEffects[i]);
             _cacheEffects[i].transform.SetParent(muzzleTransform);
         }
+    }
+
+    private void Start()
+    {
+        PoolManager.Instance.CreatePool(bulletImpactEffect.gameObject);
     }
 
     public void StartFire()
@@ -69,6 +75,10 @@ public class GunShooter : MonoBehaviour
                 BaseCreature creature = hit.collider.GetComponent<BaseCreature>();
                 if (creature != null)
                 {
+                    GameObject effect = PoolManager.Instance.Pop(bulletImpactEffect.gameObject);
+                    effect.transform.position = hit.point;
+                    effect.transform.rotation = Quaternion.LookRotation(hit.normal);
+
                     creature.TakeDamage(damage, GetComponent<BaseCreature>());
                 }
             }
