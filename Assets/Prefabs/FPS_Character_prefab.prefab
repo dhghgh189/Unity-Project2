@@ -758,6 +758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHp: 100
   startCoin: 0
+  playerRenderer: {fileID: 137000013525769516}
 --- !u!114 &1173286060
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -38,6 +38,13 @@ public class GameScene : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < Define.INVENTORY_SIZE; i++)
+        {
+            BaseItem item = new Invisible();
+            item.SetInfo(1);
+            GameManager.Instance.Player.AddItem(item);
+        }
+
         GameManager.Instance.StartWave();
     }
 }

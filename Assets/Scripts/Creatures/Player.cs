@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Player : BaseCreature
 {
     [SerializeField] int startCoin;
+    [SerializeField] Renderer playerRenderer;
 
     GunShooter _shooter;
 
@@ -29,6 +30,8 @@ public class Player : BaseCreature
 
     public UnityAction<int> OnChangedCoin;
     public UnityAction OnChangedInventory;
+
+    Coroutine _invisibleRoutine;
 
     protected override void Init()
     {
@@ -60,6 +63,13 @@ public class Player : BaseCreature
             {
                 StopShoot();
             }           
+
+            if (_invisibleRoutine != null)
+            {
+                StopCoroutine(_invisibleRoutine);
+                _invisibleRoutine = null;
+            }
+
             return;
         }
     }
@@ -103,6 +113,31 @@ public class Player : BaseCreature
         {
             HP += amount;
         }
+    }
+
+    public void Invisible(float time)
+    {
+        if (_invisibleRoutine != null)
+            return;
+
+        _invisibleRoutine = StartCoroutine(InvisibleRoutine(time));
+    }
+
+    IEnumerator InvisibleRoutine(float time)
+    {
+        int originalLayer = gameObject.layer;
+        Color originalColor = playerRenderer.material.color;
+        WaitForSeconds waitTime = new WaitForSeconds(time);
+
+        gameObject.layer = Define.INVISIBLE_LAYER;
+        playerRenderer.material.color = Color.red;
+
+        yield return waitTime;
+
+        gameObject.layer = originalLayer;
+        playerRenderer.material.color = originalColor;
+
+        _invisibleRoutine = null;
     }
 
     public void TryShoot()
