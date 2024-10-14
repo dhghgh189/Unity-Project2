@@ -18,15 +18,22 @@ public class GameScene : MonoBehaviour
             GameManager.Instance.SetMinimapCamera(camera);
         }
 
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        if (go == null)
+        if (GameManager.Instance.Player != null)
         {
-            Debug.LogError("Can't find player!");
-            return;
+            GameManager.Instance.Reset();
         }
+        else
+        {
+            GameObject go = GameObject.FindGameObjectWithTag("Player");
+            if (go == null)
+            {
+                Debug.LogError("Can't find player!");
+                return;
+            }
 
-        Player player = go.GetComponent<Player>();
-        GameManager.Instance.SetPlayer(player);
+            Player player = go.GetComponent<Player>();
+            GameManager.Instance.SetPlayer(player);
+        }
     }
 
     void Start()

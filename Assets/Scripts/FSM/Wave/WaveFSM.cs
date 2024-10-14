@@ -113,6 +113,11 @@ public class WaveFSM
         _currentWaveSpawnCount++;
     }
 
+    public void Reset()
+    {
+        CurrentWaveIndex = -1;
+    }
+
     public void Clear()
     {
         if (SpawnManager.Instance != null)

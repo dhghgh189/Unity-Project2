@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_Game : MonoBehaviour
@@ -15,13 +16,17 @@ public class UI_Game : MonoBehaviour
     [SerializeField] Button btnShoot;
     [SerializeField] TextMeshProUGUI txtCoins;
     [SerializeField] UI_Item[] uiItems;
-    [SerializeField] UI_Shop shopPanel; 
+    [SerializeField] UI_Shop shopPanel;
+    [SerializeField] GameObject gameOverPanel;
+    [SerializeField] GameObject gameClearPanel;
 
     void OnEnable()
     {
         HideGameUI();
         shopPanel.gameObject.SetActive(false);
         clearPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        gameClearPanel.SetActive(false);
 
         for (int i = 0; i < uiItems.Length; i++)
         {
@@ -36,6 +41,8 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.Wave.OnWaveEnd += WaveEnd;
         GameManager.Instance.Wave.OnChangedWaveIndex += UpdateWaveIndex;
         GameManager.Instance.OnRequestOpenShop += ShowShopUI;
+        GameManager.Instance.OnGameOver += ShowGameOverUI;
+        GameManager.Instance.OnGameClear += ShowGameClearUI;
     }
 
     void Start()
@@ -89,6 +96,16 @@ public class UI_Game : MonoBehaviour
         // hide는 shopPanel에 있는 Close 버튼을 통해 별도로 처리
     }
 
+    public void ShowGameOverUI()
+    {
+        gameOverPanel.SetActive(true);
+    }
+
+    public void ShowGameClearUI()
+    {
+        gameClearPanel.SetActive(true);
+    }
+
     public void WaveClear()
     {
         HideGameUI();
@@ -131,6 +148,16 @@ public class UI_Game : MonoBehaviour
         }
     }
 
+    public void Retry()
+    {
+        SceneManager.LoadScene("Game");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     private void OnDisable()
     {
         if (GameManager.Instance != null)
@@ -138,17 +165,19 @@ public class UI_Game : MonoBehaviour
             GameManager.Instance.Wave.OnChangedRemainEnemies -= UpdateRemainEnemies;
             GameManager.Instance.Wave.OnTimerChanged -= UpdateTimer;
             GameManager.Instance.Wave.OnProgress -= ShowGameUI;
-            GameManager.Instance.Wave.OnWaveClear += WaveClear;
+            GameManager.Instance.Wave.OnWaveClear -= WaveClear;
             GameManager.Instance.Wave.OnWaveEnd -= WaveEnd;
             GameManager.Instance.Wave.OnChangedWaveIndex -= UpdateWaveIndex;
-            GameManager.Instance.OnRequestOpenShop += ShowShopUI;
+            GameManager.Instance.OnRequestOpenShop -= ShowShopUI;
+            GameManager.Instance.OnGameOver -= ShowGameOverUI;
+            GameManager.Instance.OnGameClear -= ShowGameClearUI;
 
             if (GameManager.Instance.Player != null)
             {
                 GameManager.Instance.Player.OnHPChanged -= UpdateHP;
                 GameManager.Instance.Player.OnDead -= HideGameUI;
                 GameManager.Instance.Player.OnChangedCoin -= UpdateCoin;
-                GameManager.Instance.Player.OnChangedInventory += UpdateInventory;
+                GameManager.Instance.Player.OnChangedInventory -= UpdateInventory;
             }
         }
     }

@@ -28,7 +28,7 @@ public class UI_ShopItem : MonoBehaviour, IPointerDownHandler
         _price = data.Price;
         _className = data.ClassName;
 
-        txtItemInfo.text = $"{data.Name}\n({data.Price})";
+        txtItemInfo.text = $"{data.Name}\n({data.Price}G)";
         imgIcon.sprite = data.Icon;
     }
 

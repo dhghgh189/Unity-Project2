@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public Camera MinimapCamera { get { return _minimapCamera; } }
 
     public UnityAction OnRequestOpenShop;
+    public UnityAction OnGameClear;
+    public UnityAction OnGameOver;
 
     void Awake()
     {
@@ -53,7 +55,11 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayer(Player player)
     {
+        if (player == null)
+            return;
+
         _player = player;
+        _player.OnDead += GameOver;
         _waveFSM.Init();
     }
 
@@ -85,16 +91,34 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager EndWave");
         _curState = Enums.GameState.Idle;
 
-        // 임시 : 게임 Clear 처리 추가 필요
         if (_waveFSM.CurrentWaveIndex < DataManager.Instance.WaveDict.Count -1)
         {
             OnRequestOpenShop?.Invoke();
         }
+        else
+        {
+            OnGameClear?.Invoke();
+        }
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("Game Over");
+        _waveFSM.ChangeState(Enums.WaveState.Idle);
+        _curState = Enums.GameState.Idle;
+        OnGameOver?.Invoke();
+    }
+
+    public void Reset()
+    {
+        _player.Reset();
+        _waveFSM.Reset();
     }
 
     void OnDisable()
     {
         _waveFSM.OnWaveEnd -= EndWave;
-        _waveFSM.Clear();    
+        _waveFSM.Clear();
+        _player.OnDead -= GameOver;
     }
 }

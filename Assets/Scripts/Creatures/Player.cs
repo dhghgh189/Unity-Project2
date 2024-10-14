@@ -9,7 +9,7 @@ public class Player : BaseCreature
 
     GunShooter _shooter;
 
-    List<BaseItem> _inventory = new List<BaseItem>(Define.INVENTORY_SIZE);
+    List<BaseItem> _inventory;
     public List<BaseItem> Inventory { get { return _inventory; } }
 
     int _coin;
@@ -36,9 +36,20 @@ public class Player : BaseCreature
 
         // Temp : 버튼 UI를 통한 상호작용 필요
         _shooter = GetComponent<GunShooter>();
-        _isShooting = false;
 
+        _isShooting = false;
         _coin = startCoin;
+        _inventory = new List<BaseItem>(Define.INVENTORY_SIZE);
+    }
+
+    public void Reset()
+    {
+        _hp = _maxHp;
+        _isShooting = false;
+        _coin = startCoin;
+        _inventory.Clear();
+
+        gameObject.SetActive(true);
     }
 
     void Update()
