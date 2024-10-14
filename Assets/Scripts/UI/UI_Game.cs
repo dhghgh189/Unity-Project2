@@ -150,7 +150,7 @@ public class UI_Game : MonoBehaviour
 
     public void Retry()
     {
-        SceneManager.LoadScene("Game");
+        ExSceneManager.Instance.LoadScene("Game");
     }
 
     public void Quit()

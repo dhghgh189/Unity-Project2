@@ -37,7 +37,15 @@ public class BaseCreature : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         _collider = GetComponent<CapsuleCollider>();
+    }
 
+    void OnEnable()
+    {
+        ResetVariables();    
+    }
+
+    public virtual void ResetVariables()
+    {
         _hp = _maxHp;
     }
 
@@ -59,7 +67,6 @@ public class BaseCreature : MonoBehaviour
     {
         OnDead?.Invoke();
 
-        // 풀링 필요?
         gameObject.SetActive(false);
     }
 

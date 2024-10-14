@@ -33,8 +33,12 @@ public class SpawnManager : MonoBehaviour
     public void Spawn(Enemy enemyPrefab)
     {
         Vector3 randPos = GameManager.Instance.Player.CenterPivot.position + Random.insideUnitSphere * spawnRadius;
-        // 풀링 필요
-        Enemy enemy = Instantiate(enemyPrefab, randPos, Quaternion.identity);
+
+        // 풀링
+        Enemy enemy = PoolManager.Instance.Pop<Enemy>(enemyPrefab.gameObject);
+        enemy.gameObject.transform.position = randPos;
+        enemy.gameObject.transform.rotation = Quaternion.identity;
+
         enemy.OnDead = null;
         enemy.OnDead += () =>
         {

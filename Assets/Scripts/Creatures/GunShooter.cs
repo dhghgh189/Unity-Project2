@@ -11,6 +11,7 @@ public class GunShooter : MonoBehaviour
     [SerializeField] float fireDistance;
     [SerializeField] LayerMask whatIsTarget;
 
+    GameObject[] _cacheEffects;
     Coroutine _fireRoutine;
 
     float _nextFireTime;
@@ -18,6 +19,13 @@ public class GunShooter : MonoBehaviour
     void Awake()
     {
         _nextFireTime = 0;
+
+        _cacheEffects = new GameObject[muzzleEffects.Length];
+        for (int i = 0; i < muzzleEffects.Length; i++)
+        {
+            _cacheEffects[i] = Instantiate(muzzleEffects[i]);
+            _cacheEffects[i].transform.SetParent(muzzleTransform);
+        }
     }
 
     public void StartFire()
@@ -50,9 +58,10 @@ public class GunShooter : MonoBehaviour
 
             iRand = Random.Range(0, muzzleEffects.Length);
 
-            // temp : 풀링 필요
-            GameObject muzzleFlash = Instantiate(muzzleEffects[iRand], muzzleTransform.position, muzzleTransform.rotation);
-            muzzleFlash.transform.SetParent(muzzleTransform);
+            _cacheEffects[iRand].transform.position = muzzleTransform.position;
+            _cacheEffects[iRand].transform.rotation = muzzleTransform.rotation;
+
+            _cacheEffects[iRand].SetActive(true);
 
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
             if (Physics.Raycast(ray, out RaycastHit hit, fireDistance, whatIsTarget))

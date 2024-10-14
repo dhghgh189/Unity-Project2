@@ -17,7 +17,6 @@ public class Enemy : BaseCreature
     [SerializeField] Transform shotPivot;
 
     Player _target;
-    Vector3 _startPos;
     Enums.EnemyState _curState;
 
     BaseState<Enemy>[] _states = new BaseState<Enemy>[(int)Enums.EnemyState.Max];
@@ -38,8 +37,12 @@ public class Enemy : BaseCreature
         _states[(int)Enums.EnemyState.Attack] = new EnemyAttack(this);
 
         _target = GameManager.Instance.Player;
+    }
 
-        _startPos = transform.position;
+    public override void ResetVariables()
+    {
+        base.ResetVariables();
+
         _curState = Enums.EnemyState.Idle;
         _states[(int)_curState].OnEnter();
     }
@@ -74,6 +77,9 @@ public class Enemy : BaseCreature
         }
 
         base.Die(attacker);
+
+        // Ç®¸µ
+        PoolManager.Instance.Push(gameObject);
     }
 
     public void ChangeState(Enums.EnemyState state)

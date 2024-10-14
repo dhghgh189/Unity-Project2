@@ -79,6 +79,17 @@ public class WaveFSM
             return;
         }
 
+        // create pool
+        if (PoolManager.Instance.ContainsKey(_currentWaveData.EnemyPrefab.name) == false)
+        {
+            PoolManager.Instance.CreatePool(_currentWaveData.EnemyPrefab.gameObject, _currentWaveData.MaxSpawnCount);
+        }
+
+        if (PoolManager.Instance.ContainsKey(_currentWaveData.EnemyPrefab.ProjectilePrefab.name) == false)
+        {
+            PoolManager.Instance.CreatePool(_currentWaveData.EnemyPrefab.ProjectilePrefab.gameObject, PoolManager.Instance.DefaultPoolSize);
+        }
+
         // field init
         _currentWaveSpawnCount = 0;
         RemainEnemies = _currentWaveData.MaxSpawnCount;
@@ -113,7 +124,7 @@ public class WaveFSM
         _currentWaveSpawnCount++;
     }
 
-    public void Reset()
+    public void ResetVariables()
     {
         CurrentWaveIndex = -1;
     }

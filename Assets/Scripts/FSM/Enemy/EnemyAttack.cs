@@ -35,8 +35,11 @@ public class EnemyAttack : BaseState<Enemy>
             // TODO : Attack
             _owner.SetAnimation(Define.HASH_ATTACK, 0.25f);
 
-            // 풀링 필요
-            Projectile projectile = Object.Instantiate(_owner.ProjectilePrefab, _owner.ShotPivot.position, Quaternion.identity);
+            // 풀링 
+            Projectile projectile = PoolManager.Instance.Pop<Projectile>(_owner.ProjectilePrefab.gameObject);
+            projectile.transform.position = _owner.ShotPivot.position;
+            projectile.transform.rotation = Quaternion.identity;
+
             projectile.transform.LookAt(_owner.Target.CenterPivot);
             projectile.SetOwner(_owner);
             projectile.SetDamage(_owner.ShotDamage);

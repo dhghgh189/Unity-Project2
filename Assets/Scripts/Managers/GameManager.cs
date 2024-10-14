@@ -109,16 +109,26 @@ public class GameManager : MonoBehaviour
         OnGameOver?.Invoke();
     }
 
-    public void Reset()
+    public void ResetGame()
     {
-        _player.Reset();
-        _waveFSM.Reset();
+        if (_player.gameObject.activeInHierarchy == false)
+        {
+            _player.gameObject.SetActive(true);
+        }
+        else
+        {
+            _player.ResetVariables();
+        }
+
+        _waveFSM.ResetVariables();
     }
 
     void OnDisable()
     {
         _waveFSM.OnWaveEnd -= EndWave;
         _waveFSM.Clear();
-        _player.OnDead -= GameOver;
+
+        if (_player != null)
+            _player.OnDead -= GameOver;
     }
 }

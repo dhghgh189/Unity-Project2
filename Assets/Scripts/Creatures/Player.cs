@@ -42,14 +42,13 @@ public class Player : BaseCreature
         _inventory = new List<BaseItem>(Define.INVENTORY_SIZE);
     }
 
-    public void Reset()
+    public override void ResetVariables()
     {
-        _hp = _maxHp;
+        base.ResetVariables();
+
         _isShooting = false;
         _coin = startCoin;
         _inventory.Clear();
-
-        gameObject.SetActive(true);
     }
 
     void Update()

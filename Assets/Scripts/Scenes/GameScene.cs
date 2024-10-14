@@ -20,7 +20,7 @@ public class GameScene : MonoBehaviour
 
         if (GameManager.Instance.Player != null)
         {
-            GameManager.Instance.Reset();
+            GameManager.Instance.ResetGame();
         }
         else
         {

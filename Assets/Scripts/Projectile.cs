@@ -41,8 +41,9 @@ public class Projectile : MonoBehaviour
     {
         if (GameManager.Instance.Wave.CurState != Enums.WaveState.Progress)
         {
-            // 풀링 필요
-            Destroy(gameObject);
+            // 풀링 
+            if (PoolManager.Instance.Push(gameObject) == false)
+                Destroy(gameObject);
         }
     }
 
@@ -52,8 +53,9 @@ public class Projectile : MonoBehaviour
 
         yield return _destroyTime;
 
-        // 풀링 필요
-        Destroy(gameObject);
+        // 풀링 
+        if (PoolManager.Instance.Push(gameObject) == false)
+            Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,8 +65,9 @@ public class Projectile : MonoBehaviour
         {
             creature.TakeDamage(_damage, _owner);
 
-            // 풀링 필요
-            Destroy(gameObject);
+            // 풀링 
+            if (PoolManager.Instance.Push(gameObject) == false)
+                Destroy(gameObject);
         }
     }
 }

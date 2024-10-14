@@ -12,7 +12,6 @@ public class MinimapObjects : MonoBehaviour
 
     private void Start()
     {
-        // 풀링 필요
         _minimapObject = Instantiate(minimapObjectPrefab, gameObject.transform);
 
         SpriteRenderer sr = _minimapObject.GetComponent<SpriteRenderer>();

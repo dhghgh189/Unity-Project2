@@ -6,10 +6,11 @@ using UnityEngine;
 public class DestroySelf : MonoBehaviour
 {
     [SerializeField] float destroyTime;
+    [SerializeField] bool useDisable;
 
     float _timer;
 
-    void Start()
+    void OnEnable()
     {
         _timer = destroyTime;    
     }
@@ -19,8 +20,30 @@ public class DestroySelf : MonoBehaviour
         _timer -= Time.deltaTime;
         if (_timer <= 0)
         {
-            // temp : 풀링 필요
-            Destroy(gameObject);
+            // 풀링 
+
+            if (PoolManager.Instance.ContainsKey(gameObject.name) == false)
+            {
+                if (useDisable)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else if (PoolManager.Instance.Push(gameObject) == false)
+            {
+                if (useDisable)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+            }   
         }
     }
 }
